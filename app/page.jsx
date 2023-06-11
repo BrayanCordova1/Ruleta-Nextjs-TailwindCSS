@@ -9,6 +9,7 @@ const Wheel = dynamic(() => import("react-custom-roulette").then((mod) => mod.Wh
 export default function Home() {
   const [list, setList] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [optionSize, setOptionSize] = useState(1); // Nuevo estado para el input de número
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
 
@@ -37,10 +38,17 @@ export default function Home() {
     setInputValue(event.target.value);
   };
 
+  const handleOptionSizeChange = (event) => {
+    const value = parseInt(event.target.value);
+    if (value >= 1 && value <= 5) {
+      setOptionSize(value);
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (inputValue.trim() !== "") {
-      setList((prevList) => [...prevList, inputValue]);
+      setList((prevList) => [...prevList, { option: inputValue, optionSize }]);
       setInputValue("");
     }
   };
@@ -90,6 +98,7 @@ export default function Home() {
       backgroundColor: getItemColor(index),
       textColor: "#FFFFFF",
     },
+    optionSize: item.optionSize,
   }));
 
   if (data.length === 0 || data.length === 1) {
@@ -100,6 +109,7 @@ export default function Home() {
           backgroundColor: getItemColor(0),
           textColor: "#FFFFFF",
         },
+        optionSize: 1,
       },
       {
         option: "Cantar",
@@ -107,11 +117,11 @@ export default function Home() {
           backgroundColor: getItemColor(0),
           textColor: "#FFFFFF",
         },
-        optionSize: 40,
+        optionSize: 3,
       },
     );
-    setList((prevList) => [...prevList, "Bailar"]);
-    setList((prevList) => [...prevList, "Cantar"]);
+    setList((prevList) => [...prevList, { option: "Bailar", optionSize: 1 }]);
+    setList((prevList) => [...prevList, { option: "Cantar", optionSize: 3 }]);
   }
 
   const handleSpinClick = () => {
@@ -129,6 +139,10 @@ export default function Home() {
       <div className='absolute h-full 2xl:w-2/5 xl:w-4/12 bg-neutral-950 bg-opacity-90 rounded-xl z-40 overflow-auto'>
         <h1 className='text-center 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-xl font-bold mt-10'>Editar ruleta</h1>
         <form className='mt-4' onSubmit={handleSubmit}>
+          <div className='flex flex-row w-96 mb-2 mx-2 '>
+            <span className=' w-52 '>Nombre</span>
+            <span className='  w-12 mx-5 items-center justify-cente flex'>Probabilidad</span>
+          </div>
           <input
             type='text'
             className='mx-3 px-2 py-1 text-black'
@@ -136,11 +150,24 @@ export default function Home() {
             maxLength={35}
             onChange={handleInputChange}
           />
+          <input
+            type='number'
+            min={1}
+            max={5}
+            className='mr-3 px-2 py-1 text-black w-12'
+            value={optionSize}
+            onChange={handleOptionSizeChange}
+          />
           <button type='submit' className='px-4 py-1 bg-blue-700'>
             Agregar
           </button>
         </form>
         <ul className='mt-6 mx-4 text-sm'>
+          <div className='flex flex-row w-60 mb-2'>
+            <span className=' w-44'>Color</span>
+            <span className='w-52'>Nombre</span>
+            <span className=' w-10 mx-0 items-center justify-cente flex'>Probabilidad</span>
+          </div>
           {list.map((item, index) => (
             <li
               key={index}
@@ -155,9 +182,11 @@ export default function Home() {
                   borderRight: `20px solid ${getItemColor(index)}`,
                 }}></div>
 
-              <div>
-                <span className='mx-2'>{item}</span>
+              <div className='flex flex-row'>
+                <span className=' break-words w-44'>{item.option}</span>
+                <span className='w-4 mx-4 items-center justify-cente flex'>{item.optionSize}</span>
               </div>
+
               <div>
                 <button className='px-2 py-1 rounded-lg bg-blue-700 mr-2' onClick={() => handleDelete(index)}>
                   Editar
@@ -176,9 +205,10 @@ export default function Home() {
             mustStartSpinning={mustSpin}
             className='z-50'
             prizeNumber={prizeNumber}
-            perpendicularText={true}
-            fontSize={15}
+            perpendicularText={false}
+            fontSize={13}
             data={data}
+            textDistance={60}
             onStopSpinning={() => {
               setMustSpin(false);
             }}
