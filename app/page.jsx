@@ -1,10 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ParticlesBackground } from "@/components/ParticlesBackground";
+import { Wheel } from "react-custom-roulette";
+import { BsGithub, BsTwitter } from "react-icons/bs";
 
 export default function Home() {
   const [list, setList] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [mustSpin, setMustSpin] = useState(false);
+  const [prizeNumber, setPrizeNumber] = useState(0);
 
   useEffect(() => {
     const storedList = localStorage.getItem("list");
@@ -30,23 +34,74 @@ export default function Home() {
   };
 
   const handleDelete = (index) => {
+    if (list.length <= 2) {
+      return;
+    }
     setList((prevList) => prevList.filter((_, i) => i !== index));
   };
 
   const getItemColor = (index) => {
-    const colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF", "#C0C0C0"];
+    const colors = [
+      "#FF0000",
+      "#1ffc4e",
+      "#0000FF",
+      "#dada08",
+      "#FF00FF",
+      "#00eded",
+      "#C0C0C0",
+      "#93c47d",
+      "#674ea7",
+      "#e69138",
+      "#3d85c6",
+    ];
     return colors[index % colors.length];
+  };
+
+  const data = list.map((item, index) => ({
+    option: item,
+    style: {
+      backgroundColor: getItemColor(index),
+      textColor: "#FFFFFF",
+    },
+  }));
+
+  if (data.length === 0 || data.length === 1) {
+    data.push(
+      {
+        option: "Bailar",
+        style: {
+          backgroundColor: getItemColor(0),
+          textColor: "#FFFFFF",
+        },
+      },
+      {
+        option: "Cantar",
+        style: {
+          backgroundColor: getItemColor(0),
+          textColor: "#FFFFFF",
+        },
+      },
+    );
+  }
+
+  const handleSpinClick = () => {
+    if (!mustSpin) {
+      const newPrizeNumber = Math.floor(Math.random() * data.length);
+      setPrizeNumber(newPrizeNumber);
+      setMustSpin(true);
+    }
   };
 
   return (
     <div>
       <ParticlesBackground />
-      <div className='absolute z-0 h-full 2xl:w-2/5 xl:w-4/12  bg-neutral-950 bg-opacity-90 rounded-xl'>
+
+      <div className='absolute h-full 2xl:w-2/5 xl:w-4/12 bg-neutral-950 bg-opacity-90 rounded-xl z-40 overflow-auto'>
         <h1 className='text-center 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-xl font-bold mt-10'>Editar ruleta</h1>
         <form className='mt-4' onSubmit={handleSubmit}>
           <input type='text' className='mx-3 px-2 py-1 text-black' value={inputValue} onChange={handleInputChange} />
           <button type='submit' className='px-4 py-1 bg-blue-700'>
-            A
+            Agregar
           </button>
         </form>
         <ul className='mt-6 mx-4 text-sm'>
@@ -54,7 +109,16 @@ export default function Home() {
             <li
               key={index}
               className='flex bg-neutral-900 items-center text-center justify-between px-2 py-1 mb-2 rounded-lg'>
-              <div className='w-4 h-4 mr-2' style={{ backgroundColor: getItemColor(index) }}></div>
+              <div
+                className='triangle'
+                style={{
+                  width: "0",
+                  height: "0",
+                  borderTop: "10px solid transparent",
+                  borderBottom: "10px solid transparent",
+                  borderRight: `20px solid ${getItemColor(index)}`,
+                }}></div>
+
               <div>
                 <span className='mx-2'>{item}</span>
               </div>
@@ -70,8 +134,37 @@ export default function Home() {
           ))}
         </ul>
       </div>
-      <div>
-        <div className='absolute w-16 h-16 bg-white rounded-full text-black justify-center'>Girar</div>
+      <div
+        className='absolute ml-64 w-4/5 self-center flex h-screen justify-center 
+                items-center bg-green-30 z-20'>
+        <div>
+          <Wheel
+            mustStartSpinning={mustSpin}
+            className='z-50'
+            prizeNumber={prizeNumber}
+            data={data}
+            onStopSpinning={() => {
+              setMustSpin(false);
+            }}
+          />
+          <button onClick={handleSpinClick} className='mx-40 -z-40 mt-4 bg-blue-600 px-3 py-2'>
+            Girar la ruleta
+          </button>
+        </div>
+        <div className='absolute bottom-0  right-0 mr-6 mb-2'>
+          <a className='relative' href='https://twitter.com/GuniX41_'>
+            <span className='inline-block align-middle mr-2'>
+              <BsTwitter />
+            </span>
+            Twitter
+          </a>
+          <a className='relative ml-3'>
+            <span className='inline-block align-middle mr-2' href=''>
+              <BsGithub />
+            </span>
+            Github
+          </a>
+        </div>
       </div>
     </div>
   );

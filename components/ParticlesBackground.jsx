@@ -13,7 +13,7 @@ export function ParticlesBackground() {
   return (
     <div>
       <Particles
-        className='-z-50 w-full h-full absolute'
+        className='z-10 w-full h-full absolute'
         init={particlesInit}
         loaded={particlesLoaded}
         options={particlesConfig}
