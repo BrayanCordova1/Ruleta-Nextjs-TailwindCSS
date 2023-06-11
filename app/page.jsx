@@ -11,10 +11,11 @@ const Wheel = dynamic(() => import("react-custom-roulette").then((mod) => mod.Wh
 export default function Home() {
   const [list, setList] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const [optionSize, setOptionSize] = useState(1); // Nuevo estado para el input de número
+  const [optionSize, setOptionSize] = useState(1);
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [inputsDisabled, setInputsDisabled] = useState(false);
+  const [showWinnerModal, setShowWinnerModal] = useState(false); // Variable para controlar la visibilidad del modal
 
   try {
     window;
@@ -53,13 +54,13 @@ export default function Home() {
     if (inputValue.trim() !== "") {
       setList((prevList) => [...prevList, { option: inputValue, optionSize }]);
       setInputValue("");
-      toast.success("¡Se agrego con exito!");
+      toast.success("¡Se agregó con éxito!");
     }
   };
 
   const handleDelete = (index) => {
     if (list.length <= 2) {
-      toast.error("¡Debes tener minimo 2 datos!");
+      toast.error("¡Debes tener mínimo 2 datos!");
       return;
     }
     setList((prevList) => prevList.filter((_, i) => i !== index));
@@ -133,9 +134,13 @@ export default function Home() {
     if (!mustSpin) {
       const newPrizeNumber = Math.floor(Math.random() * data.length);
       setPrizeNumber(newPrizeNumber);
-      setInputsDisabled(true); // Desactivar los inputs
+      setInputsDisabled(true);
       setMustSpin(true);
     }
+  };
+
+  const handleModalClose = () => {
+    setShowWinnerModal(false);
   };
 
   return (
@@ -228,11 +233,16 @@ export default function Home() {
             onStopSpinning={() => {
               setMustSpin(false);
               setInputsDisabled(false);
+              setShowWinnerModal(true);
+              console.log(prizeNumber);
             }}
           />
         </div>
         <div className='absolute z-50 bottom-0 mb-10'>
-          <button onClick={handleSpinClick} className='mx-auto mt-4 bg-blue-600 px-3 py-2 z-50'>
+          <button
+            onClick={handleSpinClick}
+            disabled={inputsDisabled}
+            className='mx-auto mt-4 bg-blue-600 px-3 py-2 z-50'>
             Girar la ruleta
           </button>
         </div>
@@ -289,6 +299,25 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {showWinnerModal && (
+        <div className='fixed z-50 inset-0 flex items-center justify-center'>
+          <div style={data[prizeNumber].style} className='fixed inset-0 opacity-20 transition-opacity'></div>
+
+          <div className=' bg-slate-800 rounded-lg p-4 w-96 max-w-full mx-auto z-50'>
+            <div className='text-center'>
+              <h1 className='text-2xl font-bold mb-4'>¡Ganador!</h1>
+              <p className='text-xl'>{data[prizeNumber].option}</p>
+            </div>
+            <div className='flex justify-center mt-6'>
+              <button className='px-4 py-2 bg-blue-700 text-white font-semibold rounded-lg' onClick={handleModalClose}>
+                Cerrar
+              </button>
+            </div>
+          </div>
+          <ParticlesBackground />
+        </div>
+      )}
     </div>
   );
 }
