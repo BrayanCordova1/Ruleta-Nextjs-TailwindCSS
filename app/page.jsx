@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ParticlesBackground } from "@/components/ParticlesBackground";
+import { ParticlesBackground, ParticlesBackgroundConfe } from "@/components/ParticlesBackground";
 import dynamic from "next/dynamic";
-import { BsGithub, BsTwitter, BsTwitch, BsFillCaretRightFill } from "react-icons/bs";
+import { BsGithub, BsTwitter, BsTwitch } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -147,7 +147,7 @@ export default function Home() {
     <div className='overflow-hidden'>
       <ParticlesBackground />
 
-      <div className='absolute h-full 2xl:w-2/5 xl:w-4/12 bg-neutral-950 bg-opacity-90 rounded-xl z-40 overflow-auto'>
+      <div className='absolute h-full 2xl:w-2/5 xl:w-4/12 bg-neutral-950 bg-opacity-90 rounded-xl z-20 overflow-auto'>
         <h1 className='text-center 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-xl font-bold mt-10'>Editar ruleta</h1>
         <form className='mt-4' onSubmit={handleSubmit}>
           <div className='flex flex-row w-96 mb-2 mx-2 '>
@@ -303,7 +303,6 @@ export default function Home() {
       {showWinnerModal && (
         <div className='fixed z-50 inset-0 flex items-center justify-center'>
           <div style={data[prizeNumber].style} className='fixed inset-0 opacity-20 transition-opacity'></div>
-
           <div className=' bg-slate-800 rounded-lg p-4 w-96 max-w-full mx-auto z-50'>
             <div className='text-center'>
               <h1 className='text-2xl font-bold mb-4'>¡Ganador!</h1>
@@ -315,7 +314,7 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <ParticlesBackground />
+          <ParticlesBackgroundConfe />
         </div>
       )}
     </div>
