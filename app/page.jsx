@@ -65,6 +65,21 @@ export default function Home() {
       "#674ea7",
       "#e69138",
       "#3d85c6",
+      "#134f5c",
+      "#674ea7",
+      "#990000",
+      "#ea9999",
+      "#ffe599",
+      "#b6d7a8",
+      "#9fc5e8",
+      "#274e13",
+      "#bf9000",
+      "#5b5b5b",
+      "#444444",
+      "#bcbcbc",
+      "#000000",
+      "#741b47",
+      "#4c1130",
     ];
     return colors[index % colors.length];
   };
@@ -92,6 +107,7 @@ export default function Home() {
           backgroundColor: getItemColor(0),
           textColor: "#FFFFFF",
         },
+        optionSize: 40,
       },
     );
     setList((prevList) => [...prevList, "Bailar"]);
@@ -113,7 +129,13 @@ export default function Home() {
       <div className='absolute h-full 2xl:w-2/5 xl:w-4/12 bg-neutral-950 bg-opacity-90 rounded-xl z-40 overflow-auto'>
         <h1 className='text-center 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-xl font-bold mt-10'>Editar ruleta</h1>
         <form className='mt-4' onSubmit={handleSubmit}>
-          <input type='text' className='mx-3 px-2 py-1 text-black' value={inputValue} onChange={handleInputChange} />
+          <input
+            type='text'
+            className='mx-3 px-2 py-1 text-black'
+            value={inputValue}
+            maxLength={35}
+            onChange={handleInputChange}
+          />
           <button type='submit' className='px-4 py-1 bg-blue-700'>
             Agregar
           </button>
@@ -154,6 +176,8 @@ export default function Home() {
             mustStartSpinning={mustSpin}
             className='z-50'
             prizeNumber={prizeNumber}
+            perpendicularText={true}
+            fontSize={15}
             data={data}
             onStopSpinning={() => {
               setMustSpin(false);
