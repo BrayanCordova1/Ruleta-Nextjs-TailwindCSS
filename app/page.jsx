@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { ParticlesBackground } from "@/components/ParticlesBackground";
 import dynamic from "next/dynamic";
 import { BsGithub, BsTwitter, BsTwitch, BsFillCaretRightFill } from "react-icons/bs";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Wheel = dynamic(() => import("react-custom-roulette").then((mod) => mod.Wheel), { ssr: false });
 
@@ -50,11 +52,13 @@ export default function Home() {
     if (inputValue.trim() !== "") {
       setList((prevList) => [...prevList, { option: inputValue, optionSize }]);
       setInputValue("");
+      toast.success("¡Se agrego con exito!");
     }
   };
 
   const handleDelete = (index) => {
     if (list.length <= 2) {
+      toast.error("¡Debes tener minimo 2 datos!");
       return;
     }
     setList((prevList) => prevList.filter((_, i) => i !== index));
@@ -188,8 +192,11 @@ export default function Home() {
               </div>
 
               <div>
-                <button className='px-2 py-1 rounded-lg bg-blue-700 mr-2' onClick={() => handleDelete(index)}>
-                  Editar
+                <button
+                  className='px-2 py-1 rounded-lg bg-blue-700 mr-2'
+                  onClick={() => handleDelete(index)}
+                  disabled={true}>
+                  Pronto
                 </button>
                 <button className='px-2 py-1 rounded-lg bg-red-700' onClick={() => handleDelete(index)}>
                   Borrar
@@ -257,6 +264,18 @@ export default function Home() {
               </span>
               Twitch
             </a>
+            <ToastContainer
+              position='top-right'
+              autoClose={2000}
+              limit={5}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss={false}
+              draggable={false}
+              pauseOnHover
+            />
           </div>
         </div>
       </div>
