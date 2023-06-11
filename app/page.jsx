@@ -1,8 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ParticlesBackground } from "@/components/ParticlesBackground";
-import { Wheel } from "react-custom-roulette";
+import dynamic from "next/dynamic";
 import { BsGithub, BsTwitter } from "react-icons/bs";
+
+const Wheel = dynamic(() => import("react-custom-roulette").then((mod) => mod.Wheel), { ssr: false });
 
 export default function Home() {
   const [list, setList] = useState([]);
