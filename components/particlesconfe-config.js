@@ -28,7 +28,7 @@ export const particlesConfeConfig = {
   },
   detectRetina: true,
   duration: 0,
-  fpsLimit: 120,
+  fpsLimit: 60,
   interactivity: {
     detectsOn: "window",
     events: {
@@ -253,10 +253,10 @@ export const particlesConfeConfig = {
       drift: 0,
       enable: true,
       gravity: {
-        acceleration: 9.81,
+        acceleration: 35,
         enable: true,
         inverse: false,
-        maxSpeed: 200,
+        maxSpeed: 300,
       },
       path: {
         clamp: true,
@@ -302,8 +302,8 @@ export const particlesConfeConfig = {
         width: 1920,
         height: 1080,
       },
-      limit: 300,
-      value: 0,
+      limit: 150,
+      value: 100,
     },
     opacity: {
       random: {

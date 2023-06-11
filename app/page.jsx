@@ -141,6 +141,7 @@ export default function Home() {
 
   const handleModalClose = () => {
     setShowWinnerModal(false);
+    location.reload();
   };
 
   return (
