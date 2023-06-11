@@ -11,6 +11,21 @@ export default function Home() {
   const [prizeNumber, setPrizeNumber] = useState(0);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedList = localStorage.getItem("list");
+      if (storedList) {
+        setList(JSON.parse(storedList));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("list", JSON.stringify(list));
+    }
+  }, [list]);
+
+  useEffect(() => {
     const storedList = localStorage.getItem("list");
     if (storedList) {
       setList(JSON.parse(storedList));
