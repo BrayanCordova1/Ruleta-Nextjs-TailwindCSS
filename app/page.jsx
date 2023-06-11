@@ -14,6 +14,7 @@ export default function Home() {
   const [optionSize, setOptionSize] = useState(1); // Nuevo estado para el input de número
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
+  const [inputsDisabled, setInputsDisabled] = useState(false);
 
   try {
     window;
@@ -97,7 +98,7 @@ export default function Home() {
   };
 
   const data = list.map((item, index) => ({
-    option: item,
+    option: item.option,
     style: {
       backgroundColor: getItemColor(index),
       textColor: "#FFFFFF",
@@ -128,10 +129,20 @@ export default function Home() {
     setList((prevList) => [...prevList, { option: "Cantar", optionSize: 3 }]);
   }
 
+  useEffect(() => {
+    if (inputsDisabled) {
+      const timer = setTimeout(() => {
+        setInputsDisabled(false); // Habilitar los inputs después de 2 segundos
+      }, 11000);
+      return () => clearTimeout(timer);
+    }
+  }, [inputsDisabled]);
+
   const handleSpinClick = () => {
     if (!mustSpin) {
       const newPrizeNumber = Math.floor(Math.random() * data.length);
       setPrizeNumber(newPrizeNumber);
+      setInputsDisabled(true); // Desactivar los inputs
       setMustSpin(true);
     }
   };
@@ -153,6 +164,7 @@ export default function Home() {
             value={inputValue}
             maxLength={35}
             onChange={handleInputChange}
+            disabled={inputsDisabled}
           />
           <input
             type='number'
@@ -161,8 +173,10 @@ export default function Home() {
             className='mr-3 px-2 py-1 text-black w-12'
             value={optionSize}
             onChange={handleOptionSizeChange}
+            disabled={inputsDisabled}
           />
-          <button type='submit' className='px-4 py-1 bg-blue-700'>
+
+          <button type='submit' className='px-4 py-1 bg-blue-700' disabled={inputsDisabled}>
             Agregar
           </button>
         </form>
@@ -198,7 +212,10 @@ export default function Home() {
                   disabled={true}>
                   Pronto
                 </button>
-                <button className='px-2 py-1 rounded-lg bg-red-700' onClick={() => handleDelete(index)}>
+                <button
+                  className='px-2 py-1 rounded-lg bg-red-700'
+                  disabled={inputsDisabled}
+                  onClick={() => handleDelete(index)}>
                   Borrar
                 </button>
               </div>
@@ -216,6 +233,7 @@ export default function Home() {
             fontSize={13}
             data={data}
             textDistance={60}
+            spinDuration={0.8}
             onStopSpinning={() => {
               setMustSpin(false);
             }}
