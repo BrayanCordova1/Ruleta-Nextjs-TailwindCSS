@@ -25,17 +25,6 @@ export default function Home() {
     }
   }, [list]);
 
-  useEffect(() => {
-    const storedList = localStorage.getItem("list");
-    if (storedList) {
-      setList(JSON.parse(storedList));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("list", JSON.stringify(list));
-  }, [list]);
-
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
@@ -149,9 +138,7 @@ export default function Home() {
           ))}
         </ul>
       </div>
-      <div
-        className='absolute ml-64 w-4/5 self-center flex h-screen justify-center 
-                items-center bg-green-30'>
+      <div className='absolute ml-64 w-4/5 self-center flex h-screen justify-center items-center bg-green-30'>
         <div className='absolute z-50'>
           <Wheel
             mustStartSpinning={mustSpin}
@@ -169,17 +156,18 @@ export default function Home() {
           </button>
         </div>
         <div className='absolute bottom-0  right-0 mr-6 mb-2'>
-          <a className='relative' href='https://twitter.com/GuniX41_' target='_blank'>
+          <a className='relative' href='https://twitter.com/GuniX41_' target='_blank' rel='noopener noreferrer'>
             <span className='inline-block align-middle mr-2'>
               <BsTwitter />
             </span>
             Twitter
           </a>
-          <a className='relative ml-3'>
-            <span
-              className='inline-block align-middle mr-2'
-              href='https://github.com/BrayanCordova1/Daarick-Ruleta-Nextjs-TailwindCSS.git'
-              target='_blank'>
+          <a
+            className='relative ml-3'
+            href='https://github.com/BrayanCordova1/Daarick-Ruleta-Nextjs-TailwindCSS.git'
+            target='_blank'
+            rel='noopener noreferrer'>
+            <span className='inline-block align-middle mr-2'>
               <BsGithub />
             </span>
             Github
