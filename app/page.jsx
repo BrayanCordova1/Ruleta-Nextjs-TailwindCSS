@@ -136,8 +136,8 @@ export default function Home() {
       </div>
       <div
         className='absolute ml-64 w-4/5 self-center flex h-screen justify-center 
-                items-center bg-green-30 z-20'>
-        <div>
+                items-center bg-green-30'>
+        <div className='absolute z-50'>
           <Wheel
             mustStartSpinning={mustSpin}
             className='z-50'
@@ -147,19 +147,24 @@ export default function Home() {
               setMustSpin(false);
             }}
           />
-          <button onClick={handleSpinClick} className='mx-40 -z-40 mt-4 bg-blue-600 px-3 py-2'>
+        </div>
+        <div className='absolute z-50 bottom-0 mb-10'>
+          <button onClick={handleSpinClick} className='mx-40 mt-4 bg-blue-600 px-3 py-2 z-50'>
             Girar la ruleta
           </button>
         </div>
         <div className='absolute bottom-0  right-0 mr-6 mb-2'>
-          <a className='relative' href='https://twitter.com/GuniX41_'>
+          <a className='relative' href='https://twitter.com/GuniX41_' target='_blank'>
             <span className='inline-block align-middle mr-2'>
               <BsTwitter />
             </span>
             Twitter
           </a>
           <a className='relative ml-3'>
-            <span className='inline-block align-middle mr-2' href=''>
+            <span
+              className='inline-block align-middle mr-2'
+              href='https://github.com/BrayanCordova1/Daarick-Ruleta-Nextjs-TailwindCSS.git'
+              target='_blank'>
               <BsGithub />
             </span>
             Github

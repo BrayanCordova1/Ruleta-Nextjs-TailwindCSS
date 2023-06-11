@@ -1,34 +1,19 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Daarick-Roulette
 
-## Getting Started
+Esta página está diseñada para un streamer llamado TheDaarick28 y presenta una ruleta funcional donde los usuarios pueden agregar y eliminar datos, que se guardan localmente en su PC.
 
-First, run the development server:
+La página de TheDaarick28 es una experiencia interactiva que combina elementos de juego y entretenimiento. Utiliza tecnologías modernas como Next.js, Tailwind CSS y varios frameworks de React para proporcionar una interfaz de usuario atractiva y una funcionalidad de ruleta personalizada.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+La página ofrece las siguientes características:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ruleta personalizada: La página muestra una ruleta visualmente atractiva utilizando el framework react-custom-roulette. Los usuarios pueden girar la ruleta y recibir un resultado aleatorio de una lista de opciones predefinidas.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Agregar y eliminar datos: Los usuarios pueden agregar nuevos datos a la ruleta ingresando información en un campo de texto y haciendo clic en el botón "Agregar". También pueden eliminar datos existentes haciendo clic en el botón "Borrar" junto a cada elemento de la lista.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Guardado local: La página utiliza el almacenamiento local del navegador para guardar los datos de la ruleta. Esto significa que los datos agregados por el usuario se conservarán incluso después de cerrar y volver a abrir la página.
 
-## Learn More
+Elementos personalizados: La página incorpora elementos personalizados para reflejar la identidad del streamer TheDaarick28. Esto incluye el uso de iconos de react-icons para proporcionar íconos atractivos y relevantes, así como efectos de partículas con el framework react-particles para crear un fondo dinámico y atractivo.
 
-To learn more about Next.js, take a look at the following resources:
+En resumen, la página de TheDaarick28 es una experiencia interactiva y entretenida para los espectadores del streamer. Combina la funcionalidad de una ruleta personalizada con una interfaz atractiva y elementos personalizados, brindando una experiencia única y agradable.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Aqui puedes ver la pagina
