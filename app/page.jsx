@@ -129,15 +129,6 @@ export default function Home() {
     setList((prevList) => [...prevList, { option: "Cantar", optionSize: 3 }]);
   }
 
-  useEffect(() => {
-    if (inputsDisabled) {
-      const timer = setTimeout(() => {
-        setInputsDisabled(false); // Habilitar los inputs después de 2 segundos
-      }, 11000);
-      return () => clearTimeout(timer);
-    }
-  }, [inputsDisabled]);
-
   const handleSpinClick = () => {
     if (!mustSpin) {
       const newPrizeNumber = Math.floor(Math.random() * data.length);
@@ -236,6 +227,7 @@ export default function Home() {
             spinDuration={0.8}
             onStopSpinning={() => {
               setMustSpin(false);
+              setInputsDisabled(false);
             }}
           />
         </div>
