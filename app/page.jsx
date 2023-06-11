@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { ParticlesBackground } from "@/components/ParticlesBackground";
 import dynamic from "next/dynamic";
-import { BsGithub, BsTwitter, BsTwitch } from "react-icons/bs";
+import { BsGithub, BsTwitter, BsTwitch, BsFillCaretRightFill } from "react-icons/bs";
 
 const Wheel = dynamic(() => import("react-custom-roulette").then((mod) => mod.Wheel), { ssr: false });
 
