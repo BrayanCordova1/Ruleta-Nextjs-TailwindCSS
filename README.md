@@ -16,4 +16,4 @@ Elementos personalizados: La página incorpora elementos personalizados para ref
 
 En resumen, la página de TheDaarick28 es una experiencia interactiva y entretenida para los espectadores del streamer. Combina la funcionalidad de una ruleta personalizada con una interfaz atractiva y elementos personalizados, brindando una experiencia única y agradable.
 
-Aqui puedes ver la pagina
+Aqui puedes ver la pagina: https://daarick-ruleta.vercel.app/
