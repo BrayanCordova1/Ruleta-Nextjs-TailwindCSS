@@ -138,42 +138,44 @@ export default function Home() {
           ))}
         </ul>
       </div>
-      <div className='absolute ml-64 w-4/5 self-center flex h-screen justify-center items-center bg-green-30'>
-        <div className='absolute z-50'>
-          <Wheel
-            mustStartSpinning={mustSpin}
-            className='z-50'
-            prizeNumber={prizeNumber}
-            data={data}
-            onStopSpinning={() => {
-              setMustSpin(false);
-            }}
-          />
+      {typeof window !== "undefined" && (
+        <div className='absolute ml-64 w-4/5 self-center flex h-screen justify-center items-center bg-green-30'>
+          <div className='absolute z-50'>
+            <Wheel
+              mustStartSpinning={mustSpin}
+              className='z-50'
+              prizeNumber={prizeNumber}
+              data={data}
+              onStopSpinning={() => {
+                setMustSpin(false);
+              }}
+            />
+          </div>
+          <div className='absolute z-50 bottom-0 mb-10'>
+            <button onClick={handleSpinClick} className='mx-40 mt-4 bg-blue-600 px-3 py-2 z-50'>
+              Girar la ruleta
+            </button>
+          </div>
+          <div className='absolute bottom-0 right-0 mr-6 mb-2'>
+            <a className='relative' href='https://twitter.com/GuniX41_' target='_blank' rel='noopener noreferrer'>
+              <span className='inline-block align-middle mr-2'>
+                <BsTwitter />
+              </span>
+              Twitter
+            </a>
+            <a
+              className='relative ml-3'
+              href='https://github.com/BrayanCordova1/Daarick-Ruleta-Nextjs-TailwindCSS.git'
+              target='_blank'
+              rel='noopener noreferrer'>
+              <span className='inline-block align-middle mr-2'>
+                <BsGithub />
+              </span>
+              Github
+            </a>
+          </div>
         </div>
-        <div className='absolute z-50 bottom-0 mb-10'>
-          <button onClick={handleSpinClick} className='mx-40 mt-4 bg-blue-600 px-3 py-2 z-50'>
-            Girar la ruleta
-          </button>
-        </div>
-        <div className='absolute bottom-0  right-0 mr-6 mb-2'>
-          <a className='relative' href='https://twitter.com/GuniX41_' target='_blank' rel='noopener noreferrer'>
-            <span className='inline-block align-middle mr-2'>
-              <BsTwitter />
-            </span>
-            Twitter
-          </a>
-          <a
-            className='relative ml-3'
-            href='https://github.com/BrayanCordova1/Daarick-Ruleta-Nextjs-TailwindCSS.git'
-            target='_blank'
-            rel='noopener noreferrer'>
-            <span className='inline-block align-middle mr-2'>
-              <BsGithub />
-            </span>
-            Github
-          </a>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
