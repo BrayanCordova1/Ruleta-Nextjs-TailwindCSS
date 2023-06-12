@@ -163,7 +163,7 @@ export default function Home() {
       {showParticles && <ParticlesBackground />}
 
       <div
-        className='absolute h-full bg-neutral-950 bg-opacity-90 rounded-xl z-20 overflow-auto overflow-y-auto transition-all duration-500'
+        className='absolute h-full bg-neutral-950 bg-opacity-90 rounded-xl z-50 overflow-auto overflow-y-auto transition-all duration-500'
         style={esconderEditar ? { width: "0.003%" } : { width: "33.333333%" }}>
         <h1 className='text-center 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-xl font-bold mt-10'>Editar ruleta</h1>
 
