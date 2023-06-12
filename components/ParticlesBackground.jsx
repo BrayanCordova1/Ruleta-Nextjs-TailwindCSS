@@ -32,7 +32,7 @@ export function ParticlesBackgroundConfe() {
   return (
     <div>
       <Particles
-        className='z-50 w-full h-full absolute'
+        className='z-40 w-full h-full absolute'
         init={particlesInit}
         loaded={particlesLoaded}
         options={particlesConfeConfig}

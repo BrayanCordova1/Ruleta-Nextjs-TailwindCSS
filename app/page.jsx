@@ -17,7 +17,12 @@ export default function Home() {
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [inputsDisabled, setInputsDisabled] = useState(false);
   const [esconderEditar, setEsconderEditar] = useState(false);
-  const [showWinnerModal, setShowWinnerModal] = useState(false); // Variable para controlar la visibilidad del modal
+  const [showWinnerModal, setShowWinnerModal] = useState(false);
+  const [showParticles, setShowParticles] = useState(true);
+
+  useEffect(() => {
+    setShowParticles(!showWinnerModal);
+  }, [showWinnerModal]);
 
   try {
     window;
@@ -140,7 +145,7 @@ export default function Home() {
 
   return (
     <div className='overflow-hidden'>
-      <ParticlesBackground />
+      {showParticles && <ParticlesBackground />}
 
       <div
         className='absolute h-full bg-neutral-950 bg-opacity-90 rounded-xl z-20 overflow-auto transition-all duration-500'
@@ -218,7 +223,7 @@ export default function Home() {
         </ul>
       </div>
       <div
-        className='absolute right-0 self-center flex h-screen justify-center items-center bg-green-30 transition-all duration-700'
+        className='absolute right-0 self-center flex h-screen justify-center items-center bg-green-30 transition-all duration-1000'
         style={esconderEditar ? { width: "100%" } : { width: "66.666667%" }}>
         <div className='absolute z-50 mx-auto'>
           <Wheel
@@ -270,6 +275,7 @@ export default function Home() {
       {showWinnerModal && (
         <div className='fixed z-50 inset-0 flex items-center justify-center'>
           <div style={data[prizeNumber].style} className='fixed inset-0 opacity-20 transition-opacity'></div>
+          <ParticlesBackgroundConfe />
           <div className=' bg-slate-800 rounded-lg p-4 w-96 max-w-full mx-auto z-50'>
             <div className='text-center'>
               <h1 className='text-2xl font-bold mb-4'>¡Ganador!</h1>
@@ -281,7 +287,6 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <ParticlesBackgroundConfe />
         </div>
       )}
     </div>
