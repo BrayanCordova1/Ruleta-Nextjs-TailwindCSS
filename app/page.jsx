@@ -195,7 +195,7 @@ export default function Home() {
           </button>
         </form>
         <ul className='mt-6 mx-4 text-sm'>
-          <div className='flex flex-row 2xl:w-96 xl:w-60 mb-2 2xl:text-lg xl:text-base lg:text-sm md:text-xs'>
+          <div className='flex flex-row 2xl:w-96 xl:w-60 mb-2'>
             <span className='xl:w-44 lg:w-24'>Color</span>
             <span className='2xl:w-40 xl:w-52 lg:w-20'>Nombre</span>
             <span className='2xl:w-20 xl:w-10 lg:w-7'>Probabilidad</span>
@@ -214,7 +214,7 @@ export default function Home() {
                   borderRight: `20px solid ${getItemColor(index)}`,
                 }}></div>
 
-              <div className='flex flex-row 2xl:text-lg xl:text-base lg:text-sm md:text-xs sm:text-xs'>
+              <div className='flex flex-row'>
                 <span className=' break-words 2xl:w-64 xl:w-44 lg:w-40 '>{item.option}</span>
                 <span className='w-4 mx-4 items-center justify-cente flex'>{item.optionSize}</span>
               </div>
