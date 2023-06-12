@@ -229,6 +229,13 @@ export default function Home() {
             perpendicularText={false}
             fontSize={13}
             data={data}
+            radiusLineWidth={4}
+            innerBorderWidth={4}
+            innerRadius={10}
+            outerBorderColor={"white"}
+            outerBorderWidth={3}
+            innerBorderColor={"white"}
+            radiusLineColor={"white"}
             textDistance={60}
             spinDuration={0.8}
             onStopSpinning={() => {
