@@ -169,12 +169,12 @@ export default function Home() {
 
         <form className='mt-4' onSubmit={handleSubmit}>
           <div className='flex flex-row w-96 mb-2 mx-2 '>
-            <span className=' w-52 '>Nombre</span>
-            <span className='  w-12 mx-5 items-center justify-cente flex'>Probabilidad</span>
+            <span className='2xl:w-96 xl:w-52 lg:w-32 md:w-20 '>Nombre</span>
+            <span className=' w-12 mx-5 items-center justify-cente flex'>Probabilidad</span>
           </div>
           <input
             type='text'
-            className='mx-3 px-2 py-1 text-black'
+            className='mx-3 px-2 py-1 text-black 2xl:w-80 xl:w-60 lg:w-40 md:w-28 sm:w-2'
             value={inputValue}
             maxLength={35}
             onChange={handleInputChange}
@@ -195,10 +195,10 @@ export default function Home() {
           </button>
         </form>
         <ul className='mt-6 mx-4 text-sm'>
-          <div className='flex flex-row w-60 mb-2'>
-            <span className=' w-44'>Color</span>
-            <span className='w-52'>Nombre</span>
-            <span className=' w-10 mx-0 items-center justify-cente flex'>Probabilidad</span>
+          <div className='flex flex-row 2xl:w-96 xl:w-60 mb-2'>
+            <span className='xl:w-44 lg:w-24'>Color</span>
+            <span className='2xl:w-40 xl:w-52 lg:w-20'>Nombre</span>
+            <span className='2xl:w-20 xl:w-10 lg:w-7'>Probabilidad</span>
           </div>
           {list.map((item, index) => (
             <li
@@ -215,7 +215,7 @@ export default function Home() {
                 }}></div>
 
               <div className='flex flex-row'>
-                <span className=' break-words w-44'>{item.option}</span>
+                <span className=' break-words 2xl:w-64 xl:w-44 lg:w-40 '>{item.option}</span>
                 <span className='w-4 mx-4 items-center justify-cente flex'>{item.optionSize}</span>
               </div>
 
