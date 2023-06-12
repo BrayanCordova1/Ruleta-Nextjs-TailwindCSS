@@ -263,7 +263,7 @@ export default function Home() {
           <button
             onClick={handleSpinClick}
             disabled={inputsDisabled}
-            className='mx-auto mt-4 bg-blue-600 px-3 py-2 z-50'>
+            className='mx-auto mt-2 bg-blue-600 px-3 py-2 z-50'>
             Girar la ruleta
           </button>
         </div>
