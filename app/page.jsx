@@ -283,6 +283,7 @@ export default function Home() {
       </div>
       <button
         onClick={esconderEditar ? handleApareces : handleEsconder}
+        disabled={inputsDisabled}
         className='px-4 py-2 mx-2  my-3 absolute bg-red-600 z-50 rounded-xl'>
         {esconderEditar ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}
       </button>
