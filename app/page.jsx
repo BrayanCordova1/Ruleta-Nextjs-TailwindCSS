@@ -243,7 +243,7 @@ export default function Home() {
         <div className='absolute z-50 mx-auto'>
           <Wheel
             mustStartSpinning={mustSpin}
-            className='z-50 '
+            className='z-20'
             prizeNumber={prizeNumber}
             perpendicularText={false}
             fontSize={10}
