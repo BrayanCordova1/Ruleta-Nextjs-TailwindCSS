@@ -1,8 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ParticlesBackground, ParticlesBackgroundConfe } from "@/components/ParticlesBackground";
 import dynamic from "next/dynamic";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
+import { IoMusicalNotesOutline, IoMusicalNotesSharp } from "react-icons/io5";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Redes } from "@/components/Utilities";
@@ -19,6 +20,8 @@ export default function Home() {
   const [esconderEditar, setEsconderEditar] = useState(false);
   const [showWinnerModal, setShowWinnerModal] = useState(false);
   const [showParticles, setShowParticles] = useState(true);
+  const [showMusica, setShowMusica] = useState(false);
+  const [volume, setVolume] = useState(0.5);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -158,6 +161,32 @@ export default function Home() {
     setEsconderEditar(false);
   };
 
+  const handleOnMusica = () => {
+    setShowMusica(true);
+  };
+
+  const handleOffMusica = () => {
+    setShowMusica(false);
+  };
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    const audioElement = audioRef.current;
+
+    if (showMusica) {
+      audioElement.play();
+      audioElement.loop = true;
+    } else {
+      audioElement.pause();
+      audioElement.currentTime = 0;
+    }
+  }, [showMusica]);
+
+  useEffect(() => {
+    const audioElement = audioRef.current;
+    audioElement.volume = volume;
+  }, [volume]);
+
   return (
     <div className='overflow-hidden'>
       {showParticles && <ParticlesBackground />}
@@ -287,6 +316,25 @@ export default function Home() {
         className='px-4 py-2 mx-2  my-3 absolute bg-red-600 z-50 rounded-xl'>
         {esconderEditar ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}
       </button>
+
+      <button
+        onClick={showMusica ? handleOffMusica : handleOnMusica}
+        disabled={inputsDisabled}
+        className='px-4 py-2 mx-2 ml-16 my-3 absolute bg-red-600 z-50 rounded-xl'>
+        {showMusica ? <IoMusicalNotesSharp /> : <IoMusicalNotesOutline />}
+      </button>
+
+      <input
+        type='range'
+        min='0'
+        max='1'
+        step='0.03'
+        value={volume}
+        className='ml-32 mt-5 z-50 absolute '
+        onChange={(e) => setVolume(e.target.value)}
+      />
+
+      <audio ref={audioRef} src='/suspenso_egg.mp3' />
 
       {showWinnerModal && (
         <div className='fixed z-50 inset-0 flex items-center justify-center'>
