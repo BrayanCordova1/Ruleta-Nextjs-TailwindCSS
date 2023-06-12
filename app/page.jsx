@@ -2,9 +2,10 @@
 import { useState, useEffect } from "react";
 import { ParticlesBackground, ParticlesBackgroundConfe } from "@/components/ParticlesBackground";
 import dynamic from "next/dynamic";
-import { BsGithub, BsTwitter, BsTwitch } from "react-icons/bs";
+import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Redes } from "@/components/Utilities";
 
 const Wheel = dynamic(() => import("react-custom-roulette").then((mod) => mod.Wheel), { ssr: false });
 
@@ -15,6 +16,7 @@ export default function Home() {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [inputsDisabled, setInputsDisabled] = useState(false);
+  const [esconderEditar, setEsconderEditar] = useState(false);
   const [showWinnerModal, setShowWinnerModal] = useState(false); // Variable para controlar la visibilidad del modal
 
   try {
@@ -22,21 +24,6 @@ export default function Home() {
   } catch (err) {
     console.log("Oops, `window` is not defined");
   }
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedList = localStorage.getItem("list");
-      if (storedList) {
-        setList(JSON.parse(storedList));
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("list", JSON.stringify(list));
-    }
-  }, [list]);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -141,15 +128,25 @@ export default function Home() {
 
   const handleModalClose = () => {
     setShowWinnerModal(false);
-    location.reload();
+  };
+
+  const handleEsconder = () => {
+    setEsconderEditar(true);
+  };
+
+  const handleApareces = () => {
+    setEsconderEditar(false);
   };
 
   return (
     <div className='overflow-hidden'>
       <ParticlesBackground />
 
-      <div className='absolute h-full 2xl:w-2/5 xl:w-4/12 bg-neutral-950 bg-opacity-90 rounded-xl z-20 overflow-auto'>
+      <div
+        className='absolute h-full bg-neutral-950 bg-opacity-90 rounded-xl z-20 overflow-auto transition-all duration-500'
+        style={esconderEditar ? { width: "0.003%" } : { width: "33.333333%" }}>
         <h1 className='text-center 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-xl font-bold mt-10'>Editar ruleta</h1>
+
         <form className='mt-4' onSubmit={handleSubmit}>
           <div className='flex flex-row w-96 mb-2 mx-2 '>
             <span className=' w-52 '>Nombre</span>
@@ -220,24 +217,25 @@ export default function Home() {
           ))}
         </ul>
       </div>
-      <div className='absolute w-8/12 right-0 self-center flex h-screen justify-center items-center bg-green-30'>
+      <div
+        className='absolute right-0 self-center flex h-screen justify-center items-center bg-green-30 transition-all duration-700'
+        style={esconderEditar ? { width: "100%" } : { width: "66.666667%" }}>
         <div className='absolute z-50 mx-auto'>
           <Wheel
             mustStartSpinning={mustSpin}
-            className='z-50'
+            className='z-50 '
             prizeNumber={prizeNumber}
             perpendicularText={false}
             fontSize={13}
             data={data}
             innerBorderWidth={4}
             innerRadius={10}
-            textDistance={60}
+            textDistance={40}
             spinDuration={0.8}
             onStopSpinning={() => {
               setMustSpin(false);
               setInputsDisabled(false);
               setShowWinnerModal(true);
-              console.log(prizeNumber);
             }}
           />
         </div>
@@ -249,59 +247,25 @@ export default function Home() {
             Girar la ruleta
           </button>
         </div>
-        <div className='absolute bottom-0  right-0 mr-6 mb-2 z-50'>
-          <div>
-            <h1>Programador:</h1>
-            <a className='relative' href='https://twitter.com/GuniX41_' target='_blank' rel='noopener noreferrer'>
-              <span className='inline-block align-middle mr-2'>
-                <BsTwitter />
-              </span>
-              Twitter
-            </a>
-            <a
-              className='relative ml-3'
-              href='https://github.com/BrayanCordova1/Daarick-Ruleta-Nextjs-TailwindCSS.git'
-              target='_blank'
-              rel='noopener noreferrer'>
-              <span className='inline-block align-middle mr-2'>
-                <BsGithub />
-              </span>
-              Github
-            </a>
-          </div>
-          <div>
-            <h1>Streamer:</h1>
-            <a className='relative' href='https://twitter.com/TheDaarick28' target='_blank' rel='noopener noreferrer'>
-              <span className='inline-block align-middle mr-2'>
-                <BsTwitter />
-              </span>
-              Twitter
-            </a>
-            <a
-              className='relative ml-3'
-              href='https://www.twitch.tv/thedaarick28'
-              target='_blank'
-              rel='noopener noreferrer'>
-              <span className='inline-block align-middle mr-2'>
-                <BsTwitch />
-              </span>
-              Twitch
-            </a>
-            <ToastContainer
-              position='top-right'
-              autoClose={2000}
-              limit={5}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss={false}
-              draggable={false}
-              pauseOnHover
-            />
-          </div>
-        </div>
+        <Redes />
+        <ToastContainer
+          position='top-right'
+          autoClose={2000}
+          limit={5}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable={false}
+          pauseOnHover
+        />
       </div>
+      <button
+        onClick={esconderEditar ? handleApareces : handleEsconder}
+        className='px-4 py-2 mx-2  my-3 absolute bg-red-600 z-50 rounded-xl'>
+        {esconderEditar ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}
+      </button>
 
       {showWinnerModal && (
         <div className='fixed z-50 inset-0 flex items-center justify-center'>
