@@ -232,8 +232,6 @@ export default function Home() {
             radiusLineWidth={4}
             innerBorderWidth={4}
             innerRadius={10}
-            outerBorderColor={"white"}
-            outerBorderWidth={3}
             innerBorderColor={"white"}
             radiusLineColor={"white"}
             textDistance={60}
