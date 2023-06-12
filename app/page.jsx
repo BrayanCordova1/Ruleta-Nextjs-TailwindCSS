@@ -246,11 +246,11 @@ export default function Home() {
             className='z-50 '
             prizeNumber={prizeNumber}
             perpendicularText={false}
-            fontSize={13}
+            fontSize={10}
             data={data}
             innerBorderWidth={4}
             innerRadius={10}
-            textDistance={40}
+            textDistance={50}
             spinDuration={0.8}
             onStopSpinning={() => {
               setMustSpin(false);
