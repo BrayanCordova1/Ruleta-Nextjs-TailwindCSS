@@ -330,8 +330,11 @@ export default function Home() {
         max='1'
         step='0.03'
         value={volume}
-        className='ml-32 mt-5 z-50 absolute '
+        className='ml-32 mt-5 z-50 absolute h-3 w-40 rounded-full appearance-none range-input'
         onChange={(e) => setVolume(e.target.value)}
+        style={{
+          background: `linear-gradient(to right, red, red ${volume * 100}%, #ffffff ${volume * 100}%, #ffffff)`,
+        }}
       />
 
       <audio ref={audioRef} src='/suspenso_egg.mp3' />
