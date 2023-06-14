@@ -22,7 +22,7 @@ export default function Home() {
   const [showParticles, setShowParticles] = useState(true);
   const [showMusica, setShowMusica] = useState(false);
   const [volume, setVolume] = useState(0.5);
-
+  let musica = false;
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedList = localStorage.getItem("list");
@@ -146,11 +146,13 @@ export default function Home() {
       setPrizeNumber(newPrizeNumber);
       setInputsDisabled(true);
       setMustSpin(true);
+      musica = showMusica;
     }
   };
 
   const handleModalClose = () => {
     setShowWinnerModal(false);
+    setShowMusica(true);
   };
 
   const handleEsconder = () => {
@@ -169,6 +171,28 @@ export default function Home() {
     setShowMusica(false);
   };
   const audioRef = useRef(null);
+  const confettiAudioRef = useRef(null);
+
+  useEffect(() => {
+    const confettiAudioElement = confettiAudioRef.current;
+
+    if (showWinnerModal) {
+      if (showMusica) {
+        confettiAudioElement.play();
+        confettiAudioElement.loop = false;
+      } else {
+        if (confettiAudioElement !== null) {
+          confettiAudioElement.pause();
+          confettiAudioElement.currentTime = 0;
+        }
+      }
+    } else {
+      if (confettiAudioElement !== null) {
+        confettiAudioElement.pause();
+        confettiAudioElement.currentTime = 0;
+      }
+    }
+  }, [showMusica, showWinnerModal]);
 
   useEffect(() => {
     const audioElement = audioRef.current;
@@ -354,6 +378,7 @@ export default function Home() {
               </button>
             </div>
           </div>
+          <audio ref={confettiAudioRef} src='/confetti.mp3' loop='false' />
         </div>
       )}
     </div>
