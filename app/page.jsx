@@ -20,9 +20,16 @@ export default function Home() {
   const [esconderEditar, setEsconderEditar] = useState(false);
   const [showWinnerModal, setShowWinnerModal] = useState(false);
   const [showParticles, setShowParticles] = useState(true);
+  const [showMusicaModal, setShowMusicaModal] = useState(false);
   const [showMusica, setShowMusica] = useState(false);
+  const [showMusicaConfeti, setShowMusicaConfeti] = useState(false);
+  const [showMusicaRuleta, setShowMusicaRuleta] = useState(false);
+  const [showMusicaLista, setShowMusicaLista] = useState(false);
   const [volume, setVolume] = useState(0.5);
-  let musica = false;
+  const [volumeConfeti, setVolumeConfeti] = useState(0.5);
+  const [volumeRuleta, setVolumeRuleta] = useState(0.5);
+  const [volumeLista, setVolumeLista] = useState(0.5);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedList = localStorage.getItem("list");
@@ -146,13 +153,12 @@ export default function Home() {
       setPrizeNumber(newPrizeNumber);
       setInputsDisabled(true);
       setMustSpin(true);
-      musica = showMusica;
+      setShowMusicaModal(false);
     }
   };
 
   const handleModalClose = () => {
     setShowWinnerModal(false);
-    setShowMusica(true);
   };
 
   const handleEsconder = () => {
@@ -163,6 +169,14 @@ export default function Home() {
     setEsconderEditar(false);
   };
 
+  const handleShowModalMusica = () => {
+    setShowMusicaModal(true);
+  };
+
+  const handleHideModalMusica = () => {
+    setShowMusicaModal(false);
+  };
+
   const handleOnMusica = () => {
     setShowMusica(true);
   };
@@ -170,29 +184,43 @@ export default function Home() {
   const handleOffMusica = () => {
     setShowMusica(false);
   };
+
+  const handleOffMusicaRuleta = () => {
+    setShowMusicaRuleta(false);
+  };
+
+  const handleOnMusicaRuleta = () => {
+    setShowMusicaRuleta(true);
+  };
+
+  const handleOffMusicaConfeti = () => {
+    setShowMusicaConfeti(false);
+  };
+
+  const handleOnMusicaConfeti = () => {
+    setShowMusicaConfeti(true);
+  };
+
   const audioRef = useRef(null);
+  const ruletaAudioRef = useRef(null);
   const confettiAudioRef = useRef(null);
 
   useEffect(() => {
-    const confettiAudioElement = confettiAudioRef.current;
+    const audiconfetioElement = confettiAudioRef.current;
 
-    if (showWinnerModal) {
-      if (showMusica) {
-        confettiAudioElement.play();
-        confettiAudioElement.loop = false;
-      } else {
-        if (confettiAudioElement !== null) {
-          confettiAudioElement.pause();
-          confettiAudioElement.currentTime = 0;
-        }
-      }
+    if (showMusicaConfeti) {
+      audiconfetioElement.play();
+      audiconfetioElement.loop = false;
     } else {
-      if (confettiAudioElement !== null) {
-        confettiAudioElement.pause();
-        confettiAudioElement.currentTime = 0;
-      }
+      audiconfetioElement.pause();
+      audiconfetioElement.currentTime = 0;
     }
-  }, [showMusica, showWinnerModal]);
+  }, [showMusicaConfeti]);
+
+  useEffect(() => {
+    const audiconfetioElement = confettiAudioRef.current;
+    audiconfetioElement.volume = volumeConfeti;
+  }, [volumeConfeti]);
 
   useEffect(() => {
     const audioElement = audioRef.current;
@@ -218,7 +246,7 @@ export default function Home() {
       <div
         className='absolute h-full bg-neutral-950 bg-opacity-90 rounded-xl z-50 overflow-auto overflow-y-auto transition-all duration-500'
         style={esconderEditar ? { width: "0.003%" } : { width: "33.333333%" }}>
-        <h1 className='text-center 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-xl font-bold mt-10'>Editar ruleta</h1>
+        <h1 className='text-center 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-xl font-bold mt-12'>Editar ruleta</h1>
 
         <form className='mt-4' onSubmit={handleSubmit}>
           <div className='flex flex-row w-96 mb-2 mx-2 '>
@@ -309,6 +337,7 @@ export default function Home() {
               setMustSpin(false);
               setInputsDisabled(false);
               setShowWinnerModal(true);
+              confettiAudioRef.current.play();
             }}
           />
         </div>
@@ -342,26 +371,89 @@ export default function Home() {
       </button>
 
       <button
-        onClick={showMusica ? handleOffMusica : handleOnMusica}
+        onClick={showMusicaModal ? handleHideModalMusica : handleShowModalMusica}
         disabled={inputsDisabled}
         className='px-4 py-2 mx-2 ml-16 my-3 absolute bg-red-600 z-50 rounded-xl'>
-        {showMusica ? <IoMusicalNotesSharp /> : <IoMusicalNotesOutline />}
+        {showMusicaModal ? <IoMusicalNotesSharp /> : <IoMusicalNotesOutline />}
       </button>
 
-      <input
-        type='range'
-        min='0'
-        max='1'
-        step='0.03'
-        value={volume}
-        className='ml-32 mt-5 z-50 absolute h-3 w-40 rounded-full appearance-none range-input'
-        onChange={(e) => setVolume(e.target.value)}
-        style={{
-          background: `linear-gradient(to right, red, red ${volume * 100}%, #ffffff ${volume * 100}%, #ffffff)`,
-        }}
-      />
+      {showMusicaModal && (
+        <div className='fixed z-50 mt-12'>
+          <div className=' bg-slate-800 rounded-lg p-4 w-96 max-w-full mx-auto z-50'>
+            <div className='text-center'>
+              <h1 className='text-2xl font-bold mb-4'>Configurar musica</h1>
+            </div>
+            <div className=' mt-6 mb-3 text-left flex'>
+              <h6 className='w-36 absolute'>Musica de fondo</h6>
+              <input
+                type='range'
+                min='0'
+                max='1'
+                step='0.03'
+                value={volume}
+                className='ml-36 mt-2 z-50 h-3 w-32 rounded-full appearance-none range-input'
+                onChange={(e) => setVolume(e.target.value)}
+                style={{
+                  background: `linear-gradient(to right, red, red ${volume * 100}%, #ffffff ${volume * 100}%, #ffffff)`,
+                }}
+              />
+              <button
+                onClick={showMusica ? handleOffMusica : handleOnMusica}
+                disabled={inputsDisabled}
+                className='px-4 py-2 mx-2 right-0 mr-6 mb-1 absolute bg-red-600 z-50 rounded-xl'>
+                {showMusica ? <IoMusicalNotesSharp /> : <IoMusicalNotesOutline />}
+              </button>
+            </div>
+            <div className=' mt-6 mb-3 text-left flex'>
+              <h6 className='w-36 absolute'>Sonido de ruleta</h6>
+              <input
+                type='range'
+                min='0'
+                max='1'
+                step='0.03'
+                value={volume}
+                className='ml-36 mt-2 z-50 h-3 w-32 rounded-full appearance-none range-input'
+                onChange={(e) => setVolume(e.target.value)}
+                style={{
+                  background: `linear-gradient(to right, red, red ${volume * 100}%, #ffffff ${volume * 100}%, #ffffff)`,
+                }}
+              />
+              <button
+                onClick={showMusicaRuleta ? handleOffMusicaRuleta : handleOnMusicaRuleta}
+                disabled={inputsDisabled}
+                className='px-4 py-2 mx-2 right-0 mr-6 mb-1 absolute bg-red-600 z-50 rounded-xl'>
+                {showMusicaRuleta ? <IoMusicalNotesSharp /> : <IoMusicalNotesOutline />}
+              </button>
+            </div>
+            <div className=' mt-6 mb-3 text-left flex'>
+              <h6 className='w-36 absolute'>Sonido confeti</h6>
+              <input
+                type='range'
+                min='0'
+                max='1'
+                step='0.03'
+                value={volumeConfeti}
+                className='ml-36 mt-2 z-50 h-3 w-32 rounded-full appearance-none range-input'
+                onChange={(e) => setVolumeConfeti(e.target.value)}
+                style={{
+                  background: `linear-gradient(to right, red, red ${volumeConfeti * 100}%, #ffffff ${
+                    volumeConfeti * 100
+                  }%, #ffffff)`,
+                }}
+              />
+              <button
+                onClick={showMusicaConfeti ? handleOffMusicaConfeti : handleOnMusicaConfeti}
+                disabled={inputsDisabled}
+                className='px-4 py-2 mx-2 right-0 mr-6 mb-1 absolute bg-red-600 z-50 rounded-xl'>
+                {showMusicaConfeti ? <IoMusicalNotesSharp /> : <IoMusicalNotesOutline />}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <audio ref={audioRef} src='/suspenso_egg.mp3' />
+      <audio ref={confettiAudioRef} src='/confetti.mp3' />
 
       {showWinnerModal && (
         <div className='fixed z-50 inset-0 flex items-center justify-center'>
@@ -378,7 +470,6 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <audio ref={confettiAudioRef} src='/confetti.mp3' loop='false' />
         </div>
       )}
     </div>
