@@ -369,6 +369,7 @@ export default function Home() {
         className='px-4 py-2 mx-2  my-3 absolute bg-red-600 z-50 rounded-xl'>
         {esconderEditar ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}
       </button>
+      {/*
 
       <button
         onClick={showMusicaModal ? handleHideModalMusica : handleShowModalMusica}
@@ -376,6 +377,7 @@ export default function Home() {
         className='px-4 py-2 mx-2 ml-16 my-3 absolute bg-red-600 z-50 rounded-xl'>
         {showMusicaModal ? <IoMusicalNotesSharp /> : <IoMusicalNotesOutline />}
       </button>
+*/}
 
       {showMusicaModal && (
         <div className='fixed z-50 mt-12'>
@@ -397,6 +399,7 @@ export default function Home() {
                   background: `linear-gradient(to right, red, red ${volume * 100}%, #ffffff ${volume * 100}%, #ffffff)`,
                 }}
               />
+
               <button
                 onClick={showMusica ? handleOffMusica : handleOnMusica}
                 disabled={inputsDisabled}
